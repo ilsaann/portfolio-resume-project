@@ -1,0 +1,73 @@
+.footer {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* center horizontally */
+    padding: 16px 0;
+    font-family: var(--font-italiana), serif !important;
+    color: rgb(169, 193, 199, .8)
+}
+
+/* Row 1: heading only */
+.heading {
+    text-align: center;
+    margin-bottom: 4px;
+}
+
+/* Row 2: email + LinkedIn on same row */
+.contactRow {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 4px;
+}
+
+/* Normal contact link state */
+.contactRow a {
+    color: inherit;
+    /* matches parent text color */
+    transition: color 0.2s ease;
+    text-decoration: none;
+}
+
+/* Hover and active: purple */
+.contactRow a:hover,
+.contactRow a:active,
+.contactRow a:focus {
+    color: rgba(230, 210, 247, 0.85) !important;
+}
+
+.email {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    padding: 4px 8px;
+}
+
+/* Row 3: education */
+.education {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+    font-size: 14px;
+
+}
+
+.education a:hover,
+.education a:active,
+.education a:focus {
+    color: rgba(230, 210, 247, 0.85) !important;
+}
+
+.linkedin {
+    font-size: 14px;
+    padding: 4px 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}

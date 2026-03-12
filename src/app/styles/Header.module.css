@@ -1,0 +1,168 @@
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 100px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding:  4px 8px;
+/* Horizontal gradient: purple → green */
+    background: linear-gradient(to bottom,
+            rgba(171, 153, 186, 0.92) 0%,
+            rgba(19, 63, 71, 0.95) 100%);
+
+    /* Optional: add subtle blur/glass effect */
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid #360c1b;
+    z-index: 1000;
+}
+/* Name heading */
+.nameHeading {
+    margin: 0;
+    text-align: center;
+    padding-bottom: 0px !important;
+}
+
+.nameText {
+    font-family: var(--font-italiana), serif;
+    color: #360c1b;
+    font-weight:700;
+    font-size: 36px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    /* Optional: subtle drop shadow for depth (much cleaner than glow) */
+    text-shadow:
+            2px 2px 6px rgba(162, 142, 188, 0.6);
+        /* dusty lavender, slightly offset */
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, 20%);
+    z-index: 1001;
+}
+
+.profilePic {
+    width: 80px !important;
+    height: 80px !important;
+    border-radius: 4px !important;
+    border: 1px solid rgba(162, 142, 188, 0.687);
+    box-shadow:
+        0 0 0 2px rgba(16, 91, 99, 0.8),
+        0 4px 12px rgba(0, 0, 0, 0.3);
+}
+.menuContainer {
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    top: 18px;
+}
+
+.breadcrumbs {
+    display: flex;
+    align-items: flex-end;
+    font-family: var(--font-italiana), serif;
+    position: relative;
+    top: 8px;
+}
+/* Also target breadcrumbs specifically */
+.MuiBreadcrumbs-ol,
+.MuiBreadcrumbs-li {
+  font-family: var(--font-italiana), serif !important;
+}
+
+.menuLink {
+  font-size: 16px !important;
+  font-weight: 500;
+  color: rgba(230, 210, 247, 0.85) !important;  /* your new text color */
+  padding: 8px 12px !important;
+  transition: text-decoration-color 0.2s ease !important;
+  text-decoration: none !important;
+}
+
+/* hover: text stays same color, faint gold underline */
+.menuLink:hover {
+  text-decoration: underline !important;
+  text-underline-offset: 4px !important;
+  text-decoration-color: rgba(162, 142, 188, 0.6) !important;  /* faint gold */
+  text-decoration-thickness: 2px !important;
+  color: rgba(230, 210, 247, 0.85) !important;  /* text unchanged */
+}
+
+/* active: text stays same color, solid gold underline */
+.menuLink.active {
+  color: rgba(230, 210, 247, 0.85) !important;  /* text unchanged */
+  text-decoration: underline !important;
+  text-decoration-color:rgba(162, 142, 188, 0.95) !important;     /* solid gold underline */
+  text-underline-offset: 4px !important;
+  text-decoration-thickness: 2px !important;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+    .header {
+        height: 100px;
+        position: relative;
+        /* ← NEW: creates positioning context */
+        flex-direction: row;
+        justify-content: center;
+        align-items: flex-end;
+        padding: 8px 16px;
+    }
+
+    .profilePic {
+        width: 40px !important;
+        height: 40px !important;
+        position: absolute !important;
+        top: 12px !important;
+        /* ← FIXED: top positioning */
+        left: 16px !important;
+        z-index: 1003 !important;
+        /* ← HIGHEST z-index */
+    }
+
+    .nameText {
+        position: absolute !important;
+        left: auto !important;
+        right: 90px !important;
+        /* ← more space for menu */
+        top: 16px !important;
+        /* ← FIXED: top positioning */
+        transform: none !important;
+        font-size: 22px !important;
+        z-index: 1002 !important;
+        /* ← high z-index */
+        text-align: right;
+    }
+
+    .menuContainer {
+        position: absolute !important;
+        right: 16px !important;
+        bottom: 12px !important;
+        /* ← FIXED: bottom positioning */
+        top: auto !important;
+        z-index: 1001 !important;
+        padding-bottom: 0 !important;
+    }
+
+    .breadcrumbs {
+        margin: 0 !important;
+    }
+
+    .menuLink {
+        font-size: 12px !important;
+        padding: 2px 6px !important;
+    }
+}
+
+.skills .MuiTypography-root {
+    color: '#360c1b' !important;
+    font-family: var(--font-italiana), serif !important; 
+    /* Clean stroke outline */
+        -webkit-text-stroke: 1.5px rgba(216, 199, 238, 0.9);
+        /* purple stroke */
+        paint-order: stroke fill;
+        /* stroke first, then fill color */
+
+}

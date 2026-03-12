@@ -1,0 +1,99 @@
+.resume {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 110px 24px 24px;
+}
+
+.skills {
+    display: flex;
+    flex-direction: column;
+    background: #ffffff40;
+    border-radius: 10px;
+    align-Items: center;
+    padding: 4px;
+    gap: 2px;
+}
+
+.skills .MuiAccordion-root {
+    width: 700px;
+    background: transparent;
+}
+
+.resumeContainer {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-color: rgb(19, 63, 71);
+    /* deep green */
+    font-family: var(--font-italiana), serif;
+    width: 100%;
+}
+
+.experienceBox {
+    display: flex;
+    flex-direction: column;
+    background: #ffffff40;
+    border-radius: 10px;
+    align-Items: center;
+    padding: 4px;
+    gap: 2px;
+    width: fit-content;
+}
+
+
+
+.experienceBox .MuiTypography-root {
+    color: rgb(54, 12, 27);
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 1.8;
+    max-width: 600px;
+}   
+
+.experienceBox {
+    display: flex;
+    justify-content: center;
+    width: fit-content;
+}
+
+.experienceCards {
+    width:fit-content;
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: row;
+    overflow-x: auto;
+    min-width: 0px;
+    padding: 8px 16px 8px 8px;
+}
+
+@media (max-width: 600px) {
+    .resume {
+        padding: 110px 8px 20px;
+        width: 100%
+    }
+
+    .skills {
+        width: 90%;
+        overflow-x:auto;
+    }
+
+    .experienceBox {   
+        display: flex;
+        flex-direction: column;
+        width: 95%;
+        overflow-x: auto;
+        position: relative;
+    }
+
+
+   .experienceCards {
+        margin-left:auto;
+        width:fit-content;
+        overflow-x: auto;
+   }
+
+   /* margin-left in cards 700 */
+
+   
+}
