@@ -4,6 +4,7 @@ import {Accordion, AccordionDetails, AccordionSummary, Box, Divider, Stack, Typo
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import Card from '../../components/Card';
 import Header from '../../components/Header';
+import Footer from '../../components/Footer';
 
 const centeredSummarySx = {
   justifyContent: "center",
@@ -261,6 +262,7 @@ export default function Page() {
     </Box>
      </Box>
     </div>
+    <Footer />
     </div>
     
   );
