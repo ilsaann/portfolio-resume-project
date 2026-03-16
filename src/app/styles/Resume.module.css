@@ -33,15 +33,14 @@
 .experienceBox {
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-Items: center;
     background: #ffffff40;
     border-radius: 10px;
-    align-Items: center;
     padding: 4px;
     gap: 2px;
-    width: fit-content;
+    max-width: 98%;
 }
-
-
 
 .experienceBox .MuiTypography-root {
     color: rgb(54, 12, 27);
@@ -50,12 +49,6 @@
     line-height: 1.8;
     max-width: 600px;
 }   
-
-.experienceBox {
-    display: flex;
-    justify-content: center;
-    width: fit-content;
-}
 
 .experienceCards {
     width:fit-content;
@@ -81,19 +74,41 @@
     .experienceBox {   
         display: flex;
         flex-direction: column;
-        width: 95%;
+        width: 98%;
         overflow-x: auto;
-        position: relative;
     }
-
 
    .experienceCards {
         margin-left:auto;
         width:fit-content;
         overflow-x: auto;
    }
-
-   /* margin-left in cards 700 */
+ /* margin-left in cards 700 */
 
    
+}
+
+@media (min-width: 601px) and (max-width: 900px) {
+    .resume {
+        padding: 110px 16px 24px;
+        width: 100%;
+    }
+
+    .skills {
+        width: 90%;
+        overflow-x:auto;
+    }
+
+    .experienceBox {   
+        display: flex;
+        flex-direction: column;
+        width: 98%;
+        overflow-x: auto;
+    }
+
+    .experienceCards {
+        margin-left:auto;
+        min-width:fit-content;
+        overflow-x: auto;
+    }
 }
