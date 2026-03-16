@@ -30,7 +30,7 @@ const ExperienceObjects = [
       title: 'UI/UX Platform Software Engineer',
       company: 'MFGx',
       dates: '2022-2026',
-      summary: 'As a software engineer at MFGx, I was responsible for developing and maintaining web applications using React, Node.js, and GraphQL. I collaborated with cross-functional teams to design and implement new features, optimize performance, and ensure the scalability of our applications. I also contributed to code reviews, participated in agile ceremonies, and mentored junior developers.',
+      summary: 'As a software engineer at MFGx, I was responsible for developing features and maintainging the platform Fuuz using React, Javascript, Typescript , and GraphQL. I collaborated with cross-functional teams to design and implement new features, optimize performance, and ensure the scalability of our applications. I also contributed to code reviews, participated in agile ceremonies, and mentored junior developers.',
       bullets: [
         "Applied competencies as a UI/UX Full Stack Engineer in React.js, JavaScript, TypeScript, Redux, GraphQL, MongoDB, Docker, and Git to improve Fuuz's low/no-code solution for building responsive screens and applications",
         "Refactored and developed backend code using GraphQL, MongoDB, TypeScript, and JavaScript to implement CRUD operations in the platform, ensuring seamless integration with frontend features", 
