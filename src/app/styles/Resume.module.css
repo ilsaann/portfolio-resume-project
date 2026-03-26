@@ -24,7 +24,7 @@
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    background-color: rgb(19, 63, 71);
+    background-color: #133f47;
     /* deep green */
     font-family: var(--font-italiana), serif;
     width: 100%;
