@@ -131,8 +131,9 @@ export const typeDefs = gql`
   }
 
   type Mutation {
-    # Auth mutations
-    loginUser(email: String!): User
+    # Auth: login is REST-only (POST /api/auth/login) since that's the path
+    # that actually issues a JWT - see resolvers.js for why loginUser was
+    # removed from here rather than kept as a second, tokenless login path.
 
     # User mutations
     updateProfile(name: String, bio: String, profilePicture: String): User

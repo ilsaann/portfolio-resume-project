@@ -116,33 +116,10 @@ export const resolvers = {
 
   Mutation: {
     // Auth mutations
-    // CRUFT/DIVERGENCE: this duplicates the find-or-create-approved-user
-    // logic in src/app/api/auth/login/route.js, but that REST route also
-    // issues a JWT via createToken() and this one doesn't — so calling this
-    // mutation gives you a User object with no way to authenticate follow-up
-    // requests. Pick one login path (REST recommended, since it's the one
-    // that actually returns a usable token) and remove/redirect the other.
-    loginUser: async (_, { email }) => {
-      await connectDB();
-      const approvedEmails = process.env.APPROVED_EMAILS?.split(',') || [];
-
-      if (!approvedEmails.includes(email)) {
-        throw new Error('Email not approved');
-      }
-
-      let user = await User.findOne({ email });
-
-      if (!user) {
-        user = new User({
-          email,
-          isApproved: true,
-          role: email === approvedEmails[0] ? 'admin' : 'connoisseur',
-        });
-        await user.save();
-      }
-
-      return user;
-    },
+    // NOTE: login is REST-only now (POST /api/auth/login) since it's the one
+    // that actually issues a usable JWT via createToken() - a GraphQL
+    // loginUser mutation used to duplicate this find-or-create logic without
+    // returning a token, so it was removed rather than left unusable.
 
     // User mutations
     updateProfile: async (_, { name, bio, profilePicture }, context) => {
@@ -525,11 +502,7 @@ export const resolvers = {
     deleteComment: async (_, { commentId }, context) => {
       await connectDB();
       const user = await getAuthenticatedUser(context);
-      // CRUFT: .populate('postId') here is wasted work — postId is a
-      // refPath field (BlogPost or Gallery depending on postType), and the
-      // code below re-fetches the actual post manually anyway via
-      // BlogPost.findById/Gallery.findById. Safe to drop the .populate call.
-      const comment = await Comment.findById(commentId).populate('postId');
+      const comment = await Comment.findById(commentId);
 
       // Check if user is comment author or admin
       let postOwner;
