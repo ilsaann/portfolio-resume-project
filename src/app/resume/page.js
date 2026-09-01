@@ -127,10 +127,11 @@ export default function Page() {
               <Typography variant="h4" sx={{fontFamily: 'var(--font-italiana), serif !important', fontWeight: 600, color: '#0a0008', WebkitTextStroke: '.5px rgba(168, 140, 200, 0.9)', paintOrder: 'stroke fill'}} >Skills</Typography>
 
               {/* Frontend */}
-              <Accordion 
+              <Accordion
                 disableGutters
                 square
-                sx={{...accordionSx, 
+                className="glowOnHover"
+                sx={{...accordionSx,
                     borderTopLeftRadius: '10px',
                     borderTopRightRadius: '10px'
                   }}
@@ -152,9 +153,10 @@ export default function Page() {
               </Accordion>
 
               {/* Backend */}
-              <Accordion 
+              <Accordion
                 disableGutters
-                square 
+                square
+                className="glowOnHover"
                 sx={accordionSx}>
                 <AccordionSummary
                   expandIcon={<ArrowDropDownIcon />}
@@ -172,9 +174,10 @@ export default function Page() {
               </Accordion>
 
               {/* Developer Tools */}
-              <Accordion 
+              <Accordion
                 disableGutters
-                square 
+                square
+                className="glowOnHover"
                 sx={accordionSx}>
                 <AccordionSummary
                   expandIcon={<ArrowDropDownIcon />}
@@ -192,9 +195,10 @@ export default function Page() {
               </Accordion>
 
               {/* Core */}
-              <Accordion 
+              <Accordion
               disableGutters
               square
+              className="glowOnHover"
               sx={{...accordionSx, borderBottomLeftRadius: '10px', borderBottomRightRadius: '10px' }}>
                 <AccordionSummary
                   expandIcon={<ArrowDropDownIcon />}

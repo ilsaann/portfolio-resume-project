@@ -80,7 +80,9 @@ export default function Card({ header, content, media, bullets = [],}) {
 
 
   return (
-    <MUICard sx={{ width: '345px !important', backgroundColor: cardBackgroundColor, fontFamily: 'var(--font-italiana), serif !important', fontWeight: 600,
+    <MUICard
+       className="glowOnHover"
+       sx={{ width: '345px !important', backgroundColor: cardBackgroundColor, fontFamily: 'var(--font-italiana), serif !important', fontWeight: 600,
     }}
        onClick={onCardClick}
        >

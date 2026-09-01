@@ -1,3 +1,10 @@
+// CRUFT: unused draft, never imported anywhere. This was an early sketch of
+// a generic per-user "profile" shape (sections/items) — superseded by the
+// hardcoded ExperienceObjects array in src/app/resume/page.js. Also points at
+// a nonexistent image (/images/fuuz-ui.png — no public/images/ dir exists).
+// Worth revisiting the *shape* of this (generic sections/items per user) when
+// building Jane's Guild member profile pages, since that's effectively what
+// this was reaching for, but this specific file/data is dead.
 // For now this is "you"; later it can be any user profile
 
 // dead: old commented-out version of `profile` (sections/media based),
