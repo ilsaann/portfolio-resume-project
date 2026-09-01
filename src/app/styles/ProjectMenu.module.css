@@ -1,0 +1,41 @@
+
+
+/* Button */
+.menuButton {
+    font-family: var(--font-italiana), serif !important;
+    font-size: 16px !important;
+        font-weight: 500;
+        color: rgba(230, 210, 247, 0.85) !important;
+        padding: 0px 16px !important;
+        transition: text-decoration-color 0.2s ease !important;
+        text-decoration: none !important;
+}
+
+.menuButton .MuiTypography-root {
+    font-family: var(--font-italiana), serif !important;
+    color: rgba(230, 210, 247, 0.85) !important;
+}
+
+.menuButton:hover {
+    font-family: var(--font-italiana), serif !important;
+    text-decoration: underline !important;
+    text-underline-offset: 4px !important;
+    text-decoration-color: rgba(162, 142, 188, 0.6) !important;
+    text-decoration-thickness: 2px !important;
+    color: rgba(230, 210, 247, 0.85) !important;
+}
+
+/* dead: ProjectMenu.js references className={menu} expecting a `.menu`
+   class here, but it's commented out - either implement this or drop the
+   className reference on the JS side.
+.menu .MuiMenu .MuiPaper-root {
+    background: rgba(230, 210, 247, 0.85) !important;
+}
+
+.menu .MuiMenu .MuiList-root {
+    background: rgba(230, 210, 247, 0.85)
+}
+
+.menu .MuiTypography-root {
+    background: rgba(230, 210, 247, 0.85)
+} */

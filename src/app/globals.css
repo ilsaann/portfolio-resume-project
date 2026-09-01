@@ -40,3 +40,29 @@ a {
     color-scheme: dark;
   }
 }
+
+/* Shared hover affordance for anything clickable/expandable (resume cards,
+   accordions, project links) — a soft lavender glow + slight lift so it's
+   obvious the element responds to a click, without changing its color. */
+.glowOnHover {
+  transition: box-shadow 0.25s ease, transform 0.15s ease;
+  cursor: pointer;
+}
+
+.glowOnHover:hover,
+.glowOnHover:focus-visible {
+  box-shadow:
+    0 0 0 2px rgba(162, 142, 188, 0.55),
+    0 0 22px 6px rgba(162, 142, 188, 0.45);
+  transform: translateY(-2px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .glowOnHover {
+    transition: box-shadow 0.25s ease;
+  }
+  .glowOnHover:hover,
+  .glowOnHover:focus-visible {
+    transform: none;
+  }
+}
