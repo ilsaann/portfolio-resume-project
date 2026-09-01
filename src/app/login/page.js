@@ -48,13 +48,7 @@ const accordionTypographySx = {
 }
 
 export default function LoginPage() {
-  // BUG: destructuring `signIn` from `styles` here shadows the imported
-  // `signIn` from "next-auth/react" (line 3). Both Google sign-in buttons
-  // below call this shadowed value, which is a CSS class-name string, not
-  // a function - clicking either one throws "signIn is not a function".
-  // Rename this destructured var (e.g. `signInClass`) and update the
-  // className usages, or import the styles object under its own alias.
-  const { page, intro, signIn, signInButton, signUp} = styles;
+  const { page, intro, signIn: signInClass, signInButton, signUp} = styles;
   const [joinAsMember, setJoinAsMember] = useState(false);
 
   const handleJoinChanged = () => {
@@ -64,8 +58,8 @@ export default function LoginPage() {
   return (
     <div className={page}>
       <ProjectsHeader title="Jane's Guild" />
-      
-    <div className={signIn}> 
+
+    <div className={signInClass}>
         <div className={intro}>
           <h1>Ahhh... A Connoisseur I see...</h1>
             <p>
