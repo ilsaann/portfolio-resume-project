@@ -115,11 +115,11 @@ export const resolvers = {
   },
 
   Mutation: {
-    // Auth mutations
-    // NOTE: login is REST-only now (POST /api/auth/login) since it's the one
-    // that actually issues a usable JWT via createToken() - a GraphQL
-    // loginUser mutation used to duplicate this find-or-create logic without
-    // returning a token, so it was removed rather than left unusable.
+    // Auth: handled entirely by NextAuth (Google OAuth) at
+    // /api/auth/[...nextauth] - there's no login mutation here. The jwt
+    // callback there upserts the matching Mongoose User by email, and
+    // this file's context.userId comes from that session (see
+    // src/app/api/graphql/route.js).
 
     // User mutations
     updateProfile: async (_, { name, bio, profilePicture }, context) => {

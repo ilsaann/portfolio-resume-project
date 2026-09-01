@@ -4,9 +4,10 @@
 // core HTTP API, called directly against Next's native Fetch Request/Response
 // - no framework-specific integration package needed.
 import { ApolloServer, HeaderMap } from '@apollo/server';
+import { getServerSession } from 'next-auth';
 import { typeDefs } from '../../../graphql/schema.js';
 import { resolvers } from '../../../graphql/resolvers.js';
-import { verifyToken } from '../../../lib/auth.js';
+import { authOptions } from '../auth/[...nextauth]/route.js';
 
 // Constructed lazily (on first request, not at module import time) so that
 // `next build` importing this file to collect page data never touches
@@ -21,15 +22,14 @@ function getApolloServer() {
   return apolloServerPromise;
 }
 
-async function getContext(headerMap) {
-  const authHeader = headerMap.get('authorization');
-  if (!authHeader) return { userId: null };
-
-  const [scheme, token] = authHeader.split(' ');
-  if (scheme !== 'Bearer' || !token) return { userId: null };
-
-  const payload = await verifyToken(token);
-  return { userId: payload?.userId || null };
+async function getContext() {
+  // HYBRID BACKEND: identity comes from the NextAuth session (Google OAuth
+  // + the jwt/session callbacks in [...nextauth]/route.js), not a
+  // separately-issued Bearer token. getServerSession(authOptions) with no
+  // req/res reads the session cookie via next/headers, which works inside
+  // a Route Handler the same way it would in a Server Component.
+  const session = await getServerSession(authOptions);
+  return { userId: session?.user?.id || null };
 }
 
 export const POST = async (req) => {
@@ -58,7 +58,7 @@ export const POST = async (req) => {
       search: new URL(req.url).search,
       body: parsedBody,
     },
-    context: () => getContext(headerMap),
+    context: () => getContext(),
   });
 
   const responseHeaders = Object.fromEntries(httpGraphQLResponse.headers);
