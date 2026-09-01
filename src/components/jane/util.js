@@ -32,6 +32,11 @@ light: {
 },
 };
 
+// TODO: JaneTheme has no actual colors yet, unlike DarkAcademiaTheme/TurtleTheme
+// above - but it's the *default* themeOption in both CreateNewGalleryForm.js
+// and Gallery.js, so anything using the default theme today gets no styling
+// from this. None of the three theme objects in this file are imported
+// anywhere yet either - the theming system is designed but unwired.
 export const JaneTheme = {
 dark: {},
 light: {},

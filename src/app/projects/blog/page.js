@@ -4,6 +4,9 @@
 import { useMemo, useState } from 'react';
 import { Box, Typography, Button, Stack, Chip } from '@mui/material';
 import { useRouter } from 'next/navigation';
+// NOTE: posts live only in useState below, seeded from this static array -
+// reordering/filtering is client-only and resets on refresh. No backend/API
+// call anywhere in this file.
 import { initialBlogPosts } from '../../../data/blogPosts';
 import BlogPostCard from '../../../components/blog/BlogPostCard';
 import BlogReorderControls from '../../../components/blog/BlogReorderControls';
@@ -28,6 +31,8 @@ export default function BlogProjectPage() {
   }, [posts, activeTag]);
 
   const handleOpenPost = (slug) => {
+    // BROKEN LINK: src/app/projects/blog/[slug]/page.js is currently empty
+    // (no default export), so this navigates to a route that won't render.
     router.push(`/projects/blog/${slug}`);
   };
 
@@ -42,6 +47,8 @@ export default function BlogProjectPage() {
   };
 
   const handleCreateNew = () => {
+    // BROKEN LINK: no src/app/projects/blog/new/ route exists yet - this is
+    // currently a dead link (404).
     router.push('/projects/blog/new');
   };
 

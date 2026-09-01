@@ -1,5 +1,7 @@
 // For now this is "you"; later it can be any user profile
 
+// dead: old commented-out version of `profile` (sections/media based),
+// superseded by the flatter shape below. Safe to delete.
 // export const profile = {
 //   username: "ilsa",
 //   displayName: "Ilsa Hampton",
@@ -42,6 +44,12 @@
 // may turn to typescript types and interfaces to organize data
 // then I need to actually create data models and connect ot database smartly
 
+// NOTE: none of the objects below (UserRoles, profile, GuildMemberProfile,
+// gallery, blogPost, blog, journalEntry, journal, tag) are exported, and
+// nothing in src/ imports this file - this is a pure design sketch (using
+// 'string'/'date' as placeholder type annotations), not live data or a
+// schema yet. See the two bugs flagged further down before turning this
+// into real exported schemas/types.
 const UserRoles = {
   ADMIN: "admin", // me
   Connoisseur: "connoisseur", // view public content, comment ,saving favorites
@@ -88,6 +96,9 @@ const gallery = {
 }
 
 const blogPost = {
+  // BUG: `blogId` is declared twice in this object literal - the second
+  // (line below) silently overwrites the first. The first one was probably
+  // meant to be this post's own id (e.g. `postId`).
   blogId: 'string',
   title: 'string',
   content: 'string',
@@ -118,6 +129,11 @@ const journal = {
   journalId: 'string',
   title: 'string',
   description: 'string',
+  // BUG: references `tag` (declared with `const` further below) before its
+  // declaration. Harmless today since this file is never imported/executed,
+  // but if it were, this throws a ReferenceError immediately at module load
+  // (const bindings are in the temporal dead zone until their declaration
+  // runs). Move `tag`'s declaration above this.
   tags:[tag],
   creatorId: 'string', // user ID of the creator
   entries: [journalEntry], // array of journal entries

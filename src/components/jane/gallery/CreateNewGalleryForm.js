@@ -13,6 +13,7 @@
 
 
 //
+// NOTE: not imported/rendered by any page yet - orphaned from the UI for now.
 'use client';
 
 import React, { useEffect, useState } from 'react';
@@ -70,6 +71,8 @@ export default function CreateNewGallery({ isAdmin = false }) {
       return;
     }
 
+    // NOTE: local preview only (createObjectURL) - files are never actually
+    // uploaded anywhere (no Cloudinary/S3/Supabase Storage/etc).
     const newImages = files.map((file) => ({
       file,
       previewUrl: URL.createObjectURL(file),

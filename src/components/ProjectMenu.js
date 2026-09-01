@@ -8,6 +8,10 @@ import { useRouter } from 'next/navigation';
 // mode switch in menu too
 export default function ProjectMenu() {
   const router = useRouter();
+  // dead: `menu` doesn't exist in ProjectMenu.module.css (only inside a
+  // commented-out block there) - resolves to undefined, so
+  // className={menu} below has no effect. The popup's background is set
+  // entirely via the inline sx props instead.
   const { menuButton, menu } = styles;
   const [anchorEl, setAnchorEl] = useState(null);
 
@@ -65,6 +69,7 @@ export default function ProjectMenu() {
         }}
         className={menu}
     >
+        {/* TODO: no onClick - doesn't route to /login (or anywhere) yet */}
         <MenuItem >
         <Avatar />
         <Button >

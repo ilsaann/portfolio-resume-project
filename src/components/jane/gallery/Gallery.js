@@ -1,3 +1,5 @@
+// dead: these two imports are shadowed/superseded by the real import block
+// below (lines ~38-39) and are never used - safe to delete.
 import React from 'react'
 import ImageList from '@mui/material/ImageList';
 
@@ -33,6 +35,10 @@ import ImageList from '@mui/material/ImageList';
 // we want save all changes button and/or autosave if not too costly
 //      when pushed it toggles edit switch off
 
+// BUG: 'use client' must be the very first line of the file per Next.js -
+// having real import statements above it (lines 1-2) means this directive
+// isn't actually taking effect as written. Only harmless right now because
+// nothing imports this component yet (also currently orphaned/unrendered).
 'use client';
 
 import React, { useMemo, useState } from 'react';

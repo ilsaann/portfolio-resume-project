@@ -3,6 +3,9 @@ import { Box, FormControlLabel, Switch, Typography } from '@mui/material';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 
+// NOTE: complete, working component, but not imported/rendered by any page
+// yet - a good fit for the gallery/about-me "public/private" toggle once
+// those pages exist.
 export default function PublicSwitch({
   checked = false,
   onChange,

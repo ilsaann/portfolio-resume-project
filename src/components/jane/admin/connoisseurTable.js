@@ -1,3 +1,4 @@
+// STUB: comments/spec only, no component/export exists yet.
 // this is a table that displays all the connoisseurs
 // columns: name, comments, createdAt
 // plus button in the table heading [+connoisseur]

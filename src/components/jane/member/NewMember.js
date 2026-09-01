@@ -1,6 +1,8 @@
 'use client';
 import React from 'react'
 
+// STUB: placeholder shell, not imported anywhere yet - real intake fields
+// are specced in the comments below but not built.
 export default function NewMember() {
   return (
     <div>NewMember</div>

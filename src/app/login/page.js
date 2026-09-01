@@ -48,6 +48,12 @@ const accordionTypographySx = {
 }
 
 export default function LoginPage() {
+  // BUG: destructuring `signIn` from `styles` here shadows the imported
+  // `signIn` from "next-auth/react" (line 3). Both Google sign-in buttons
+  // below call this shadowed value, which is a CSS class-name string, not
+  // a function - clicking either one throws "signIn is not a function".
+  // Rename this destructured var (e.g. `signInClass`) and update the
+  // className usages, or import the styles object under its own alias.
   const { page, intro, signIn, signInButton, signUp} = styles;
   const [joinAsMember, setJoinAsMember] = useState(false);
 
@@ -80,6 +86,7 @@ export default function LoginPage() {
         </AccordionSummary>
           <AccordionDetails sx={accordionDetailsSx}>
             <h1>Sign In: </h1>
+             {/* also: duplicate of the "Sign in with Google" button further down (line ~106) - pick one */}
              <button onClick={() => signIn("google")} className={signInButton}>
               Sign in with Google
             </button>
@@ -88,6 +95,7 @@ export default function LoginPage() {
       <Divider orientation='horizontal' />
       <div className={signUp}>
 
+         {/* this sign-up form has no submit button and no onSubmit/save logic yet - it's a shell */}
          <FormGroup>
           <TextField variant="standard" label="First Name"></TextField>
           <TextField variant="standard" label="Last Name"></TextField>
