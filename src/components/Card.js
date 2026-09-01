@@ -33,31 +33,31 @@ export default function Card({ header, content, media, bullets = [],}) {
     ));
   };
 
-  const cardBackgroundColor = expanded ? 'rgba(171, 153, 186, 0.92)' : 'rgba(150, 177, 184, 0.92)'; 
+  const cardBackgroundColor = expanded ? 'var(--theme-accent)' : 'var(--theme-surface)';
 
  const renderCardMedia = (media) => {
   if (!media || media.length === 0) return null;
 
   return (
     <Box sx={{ 
-      height: 180, 
-      overflowX: 'auto',   
-      backgroundColor: '#96b1b8f2',  // glass green background
-        
+      height: 180,
+      overflowX: 'auto',
+      backgroundColor: 'var(--theme-surface)',
+
         /* Custom scrollbar colors to match card */
-        scrollbarColor: '#133f47 #96b1b8f2',  // thumb color, track color
+        scrollbarColor: 'var(--theme-background) var(--theme-surface)',  // thumb color, track color
         scrollbarWidth: 'thin',
-        
+
         /* Webkit scrollbar styling for Chrome/Safari */
         '&::-webkit-scrollbar': {
           height: '6px'
         },
         '&::-webkit-scrollbar-track': {
-          backgroundColor: '#96b1b8f2',  // matches card bg
+          backgroundColor: 'var(--theme-surface)',  // matches card bg
           borderRadius: '3px'
         },
         '&::-webkit-scrollbar-thumb': {
-          backgroundColor: '#133f47',    // slightly darker glass green
+          backgroundColor: 'var(--theme-background)',
           borderRadius: '3px',
         },
         '&::-webkit-scrollbar-thumb:hover': {
@@ -81,7 +81,7 @@ export default function Card({ header, content, media, bullets = [],}) {
 
   return (
     <MUICard
-       className="glowOnHover"
+       className="glowOnHoverGold"
        sx={{ width: '345px !important', backgroundColor: cardBackgroundColor, fontFamily: 'var(--font-italiana), serif !important', fontWeight: 600,
     }}
        onClick={onCardClick}

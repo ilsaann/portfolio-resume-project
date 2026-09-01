@@ -17,16 +17,22 @@ const gallerySchema = new mongoose.Schema(
       required: true,
     },
     description: String,
+    // Where customers could show up locally to purchase/support the
+    // artist - the core "online gallery that informs customers where to
+    // show up" idea behind Jane's Guild in the first place.
+    location: String,
     artist: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
       required: true,
     },
     photos: [photoSchema],
+    // Optional per-gallery override - when unset, the frontend falls back
+    // to the artist's own User.theme (galleries "auto align to the theme
+    // of the About Me" page by default).
     theme: {
       type: String,
-      enum: ['minimal', 'dark', 'vibrant', 'classic', 'modern'],
-      default: 'modern',
+      enum: ['jane', 'academia', 'turtle'],
     },
     isPublished: {
       type: Boolean,

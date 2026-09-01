@@ -122,13 +122,25 @@ export const resolvers = {
     // src/app/api/graphql/route.js).
 
     // User mutations
-    updateProfile: async (_, { name, bio, profilePicture }, context) => {
+    updateProfile: async (_, { name, bio, profilePicture, theme }, context) => {
       await connectDB();
       const user = await getAuthenticatedUser(context);
 
       if (name) user.name = name;
       if (bio) user.bio = bio;
       if (profilePicture) user.profilePicture = profilePicture;
+      if (theme) user.theme = theme;
+
+      await user.save();
+      return user;
+    },
+
+    updateResume: async (_, { experience, skills }, context) => {
+      await connectDB();
+      const user = await getAuthenticatedUser(context);
+
+      if (experience) user.experience = experience;
+      if (skills) user.skills = skills;
 
       await user.save();
       return user;
@@ -169,15 +181,19 @@ export const resolvers = {
     },
 
     // Gallery mutations
-    createGallery: async (_, { title, description, photoCount }, context) => {
+    createGallery: async (_, { title, description, location, photoCount, theme }, context) => {
       await connectDB();
       const user = await getAuthenticatedUser(context);
 
       const gallery = new Gallery({
         title,
         description,
+        location,
         artist: user._id,
         photoCount,
+        // Left unset (falls back to the artist's own User.theme on the
+        // frontend) unless an explicit override is passed.
+        theme,
       });
 
       await gallery.save();
@@ -186,7 +202,7 @@ export const resolvers = {
       return gallery.populate('artist');
     },
 
-    updateGallery: async (_, { id, title, description, theme }, context) => {
+    updateGallery: async (_, { id, title, description, location, theme }, context) => {
       await connectDB();
       const user = await getAuthenticatedUser(context);
       const gallery = await Gallery.findById(id);
@@ -197,6 +213,7 @@ export const resolvers = {
 
       if (title) gallery.title = title;
       if (description) gallery.description = description;
+      if (location) gallery.location = location;
       if (theme) gallery.theme = theme;
 
       await gallery.save();

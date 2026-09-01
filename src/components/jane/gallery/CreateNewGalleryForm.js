@@ -1,59 +1,44 @@
-// this is to be the form to fill out to create the gallery,
-// select for mui gallery image list type: with skeletons
-// we will need to be able to upload up to 6 images
-// we will want to show previews with editable captions
-// switch for captions off or on, that remains editable to the 
-    //builder
-// gallery summary intake for now just render below the gallery 
-    // however maybe edit position in the future
-
-// gallery page theme, auto align to the theme of the 'About Me'
-// we need a location chip for where someone could show up to (auto fill from profile if available)
-// obtain creative service
-
-
-//
-// NOTE: not imported/rendered by any page yet - orphaned from the UI for now.
+// Gallery creation form - wired to the real createGallery/addPhotoToGallery
+// GraphQL mutations and /api/upload (see handleSubmit below).
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import {
   Box,
   Button,
   TextField,
   Switch,
-  FormControlLabel,
   MenuItem,
-  Select,
   Typography,
   ImageList,
   ImageListItem,
   ImageListItemBar,
   IconButton,
   Stack,
+  CircularProgress,
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 
 const MAX_IMAGES = 6;
 
-// Admin demo data - delete this when real backend exists
-const ADMIN_DEMO = {
-  galleryTitle: "Jane's Guild Showcase",
-  location: "Atlanta, GA",
-  captionsOn: true,
-  themeOption: "jane",
-  galleryVariant: "masonry",
-  images: [
-    { previewUrl: "https://via.placeholder.com/400x600/1a3c47/230ad2?text=Drawing+1", caption: "Jane's first showcase drawing" },
-    { previewUrl: "https://via.placeholder.com/600x400/1a3c47/230ad2?text=Drawing+2", caption: "Second drawing preview" },
-    { previewUrl: "https://via.placeholder.com/400x600/1a3c47/230ad2?text=Drawing+3", caption: "Third drawing preview" },
-  ],
-};
+async function graphqlRequest(query, variables) {
+  const res = await fetch('/api/graphql', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ query, variables }),
+  });
+  const json = await res.json();
+  if (json.errors?.length) {
+    throw new Error(json.errors[0].message);
+  }
+  return json.data;
+}
 
-export default function CreateNewGallery({ isAdmin = false }) {
-  const [formData, setFormData] = useState(isAdmin ? ADMIN_DEMO : {
+export default function CreateNewGallery({ onCreated }) {
+  const [formData, setFormData] = useState({
     galleryTitle: '',
+    description: '',
     location: '',
     captionsOn: true,
     themeOption: 'jane',
@@ -61,6 +46,7 @@ export default function CreateNewGallery({ isAdmin = false }) {
     images: [],
   });
   const [error, setError] = useState('');
+  const [submitting, setSubmitting] = useState(false);
 
   const handleFiles = (event) => {
     const files = Array.from(event.target.files || []);
@@ -92,16 +78,81 @@ export default function CreateNewGallery({ isAdmin = false }) {
     }));
   };
 
-  const handleSubmit = () => {
-    console.log('Create gallery:', formData);
-    // TODO: POST to backend
-    alert('Gallery created! (demo)');
+  const CREATE_GALLERY = `
+    mutation CreateGallery($title: String!, $description: String, $location: String, $photoCount: Int!, $theme: Theme) {
+      createGallery(title: $title, description: $description, location: $location, photoCount: $photoCount, theme: $theme) {
+        id
+      }
+    }
+  `;
+
+  const ADD_PHOTO = `
+    mutation AddPhoto($galleryId: ID!, $filename: String!, $filepath: String!, $caption: String) {
+      addPhotoToGallery(galleryId: $galleryId, filename: $filename, filepath: $filepath, caption: $caption) {
+        id
+      }
+    }
+  `;
+
+  const PUBLISH_GALLERY = `
+    mutation PublishGallery($id: ID!) {
+      publishGallery(id: $id) {
+        id
+        isPublished
+      }
+    }
+  `;
+
+  const handleSubmit = async () => {
+    setSubmitting(true);
+    setError('');
+    try {
+      const { createGallery } = await graphqlRequest(CREATE_GALLERY, {
+        title: formData.galleryTitle,
+        description: formData.description,
+        location: formData.location || null,
+        photoCount: formData.images.length,
+        theme: formData.themeOption,
+      });
+      const galleryId = createGallery.id;
+
+      for (const img of formData.images) {
+        const uploadForm = new FormData();
+        uploadForm.append('file', img.file);
+        uploadForm.append('galleryId', galleryId);
+
+        const uploadRes = await fetch('/api/upload', { method: 'POST', body: uploadForm });
+        const uploadJson = await uploadRes.json();
+        if (!uploadRes.ok) {
+          throw new Error(uploadJson.error || 'Image upload failed');
+        }
+
+        await graphqlRequest(ADD_PHOTO, {
+          galleryId,
+          filename: uploadJson.filename,
+          filepath: uploadJson.filepath,
+          caption: img.caption || null,
+        });
+      }
+
+      await graphqlRequest(PUBLISH_GALLERY, { id: galleryId });
+
+      formData.images.forEach((img) => {
+        if (img.previewUrl) URL.revokeObjectURL(img.previewUrl);
+      });
+
+      onCreated?.(galleryId);
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
     <Box sx={{ p: 4, maxWidth: 800, mx: 'auto' }}>
       <Typography variant="h4" gutterBottom sx={{ fontFamily: 'var(--font-italiana), serif' }}>
-        {isAdmin ? 'Admin Gallery Creator' : 'Create Gallery'}
+        Create Gallery
       </Typography>
 
       <Stack spacing={3}>
@@ -113,7 +164,17 @@ export default function CreateNewGallery({ isAdmin = false }) {
         />
 
         <TextField
+          label="Description (optional)"
+          value={formData.description}
+          onChange={(e) => setFormData(prev => ({ ...prev, description: e.target.value }))}
+          fullWidth
+          multiline
+          minRows={2}
+        />
+
+        <TextField
           label="Location (optional)"
+          helperText="Where can customers show up in person to see or buy this work?"
           value={formData.location}
           onChange={(e) => setFormData(prev => ({ ...prev, location: e.target.value }))}
           fullWidth
@@ -222,9 +283,10 @@ export default function CreateNewGallery({ isAdmin = false }) {
           variant="contained"
           size="large"
           onClick={handleSubmit}
-          disabled={!formData.galleryTitle.trim() || formData.images.length === 0}
+          disabled={!formData.galleryTitle.trim() || formData.images.length === 0 || submitting}
+          startIcon={submitting ? <CircularProgress size={18} color="inherit" /> : null}
         >
-          Create Gallery
+          {submitting ? 'Creating...' : 'Create Gallery'}
         </Button>
       </Stack>
     </Box>

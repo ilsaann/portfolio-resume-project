@@ -1,0 +1,81 @@
+.page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--theme-background);
+  font-family: var(--font-italiana), serif;
+}
+
+.main {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  align-items: center;
+  padding: 110px 16px 40px;
+  gap: 24px;
+}
+
+.paper {
+  max-width: 700px;
+  width: 100%;
+  background-image: radial-gradient(
+        rgba(150, 177, 184, 0.949) 0%,
+        rgb(169, 193, 199, .6) 100%);
+  margin: 40px auto 0;
+  padding: 32px 40px;
+  border-radius: 10px;
+  box-shadow:
+    0 12px 30px rgba(0, 0, 0, 0.4),
+    0 0 0 1px rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+.name {
+  color: var(--theme-text-on-surface) !important;
+  font-family: var(--font-italiana), serif !important;
+  font-weight: 700 !important;
+  margin-bottom: 12px !important;
+}
+
+.bio {
+  margin: 0;
+  line-height: 1.8;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--theme-text-on-surface);
+}
+
+.galleriesSection {
+  max-width: 900px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.emptyState {
+  color: var(--theme-text-on-background);
+  text-align: center;
+  font-size: 16px;
+  opacity: 0.85;
+}
+
+.createButton {
+  align-self: center;
+  font-family: var(--font-italiana), serif !important;
+  background: var(--theme-accent) !important;
+  color: var(--theme-text-on-background) !important;
+}
+
+@media (max-width: 600px) {
+  .paper {
+    margin: 24px auto 0;
+    padding: 24px 20px;
+  }
+
+  .bio {
+    font-size: 15px;
+  }
+}

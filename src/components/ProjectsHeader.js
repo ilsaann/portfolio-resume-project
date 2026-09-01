@@ -15,15 +15,23 @@ import ProjectMenu from './ProjectMenu';
 
 const { logo, header, title: headerTitle, link, breadMenu, projMenu } = styles;
 
-//get project title from project menu
-
-export default function ProjectsHeader({ title }) {
+// Reused for any /projects/* page - the Jane's Guild landing page and
+// login page use the defaults (Guild logo, "About Creator" link to the
+// site root); member About Me pages pass their own avatar/name/link so
+// this same header works for both without duplicating it.
+export default function ProjectsHeader({
+  title,
+  avatarSrc = '/janes-guild-logo-removebg.png',
+  avatarAlt = "Jane's Guild",
+  aboutHref = '/',
+  aboutLabel = 'About Creator',
+}) {
   return (
     <Box className={header}>
-       <Avatar 
+       <Avatar
         className={logo}
-        src="/janes-guild-logo-removebg.png" 
-        alt="Jane's Guild"
+        src={avatarSrc}
+        alt={avatarAlt}
         sx={{
     '& .MuiAvatar-img': {
       objectFit: 'cover !important',
@@ -40,12 +48,12 @@ export default function ProjectsHeader({ title }) {
           aria-label="page navigation"
           sx={{fontFamily: 'var(--font-italiana), serif !important' }}
         >
-            <Link 
-            href="/"
+            <Link
+            href={aboutHref}
             className={link}
             underline="none"
           >
-            About Creator
+            {aboutLabel}
           </Link>
            </Breadcrumbs>
            <Divider orientation="vertical" variant="middle" flexItem />

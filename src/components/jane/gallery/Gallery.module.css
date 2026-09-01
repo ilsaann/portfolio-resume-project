@@ -1,0 +1,102 @@
+.galleryShell {
+  border-radius: 10px;
+  padding: 16px;
+  font-family: var(--font-italiana), serif;
+}
+
+.headerRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.title {
+  margin: 0;
+  font-family: var(--font-italiana), serif;
+}
+
+.editToggle {
+  font-family: var(--font-italiana), serif;
+  cursor: pointer;
+  border: none;
+  border-radius: 6px;
+  padding: 6px 14px;
+}
+
+.editItem {
+  position: relative;
+  outline: 2px dashed rgba(230, 210, 247, 0.6);
+}
+
+.editActions {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  display: flex;
+  gap: 4px;
+  z-index: 2;
+}
+
+/* Jane theme (default - the site's own existing look) */
+.themeJane.dark {
+  background: var(--theme-background);
+  color: var(--theme-text-on-background);
+}
+.themeJane.dark .title {
+  color: var(--theme-text-on-background);
+}
+.themeJane.dark .editToggle {
+  background: var(--theme-accent);
+  color: var(--theme-text-on-background);
+}
+
+.themeJane.light {
+  background: var(--theme-surface);
+  color: var(--theme-text-on-surface);
+}
+.themeJane.light .title {
+  color: var(--theme-text-on-surface);
+}
+.themeJane.light .editToggle {
+  background: var(--theme-accent);
+  color: var(--theme-text-on-surface);
+}
+
+/* Dark Academia / Turtle: not reachable from a theme switcher yet (no UI
+   toggle exists), approximated from src/components/jane/util.js's existing
+   DarkAcademiaTheme/TurtleTheme color values so they aren't broken if/when
+   that switcher is built. */
+.themeAcademia.dark {
+  background: #033b6b;
+  color: #c5d0df;
+}
+.themeAcademia.dark .editToggle {
+  background: #540822;
+  color: #c5d0df;
+}
+.themeAcademia.light {
+  background: #7a9ebd;
+  color: #665b4b;
+}
+.themeAcademia.light .editToggle {
+  background: #87606e;
+  color: #ffffff;
+}
+
+.themeTurtle.dark {
+  background: #244a39;
+  color: #c2ddd1;
+}
+.themeTurtle.dark .editToggle {
+  background: #735e4e;
+  color: #c2ddd1;
+}
+.themeTurtle.light {
+  background: #c2ddd1;
+  color: #594434;
+}
+.themeTurtle.light .editToggle {
+  background: #ae9c8e;
+  color: #2d2620;
+}

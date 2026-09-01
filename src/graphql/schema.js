@@ -17,11 +17,9 @@ export const typeDefs = gql`
   }
 
   enum Theme {
-    minimal
-    dark
-    vibrant
-    classic
-    modern
+    jane
+    academia
+    turtle
   }
 
   type Photo {
@@ -32,6 +30,52 @@ export const typeDefs = gql`
     uploadedAt: String!
   }
 
+  # Interactive resume content, rendered through the same InteractiveResume/
+  # Card components as Ilsa's own /resume page.
+  type Media {
+    image: String
+    title: String
+    tag: String
+    caption: String
+  }
+
+  type Experience {
+    title: String!
+    company: String!
+    dates: String
+    summary: String
+    bullets: [String!]
+    media: [Media!]
+  }
+
+  type Skill {
+    id: String!
+    label: String!
+    content: String
+  }
+
+  input MediaInput {
+    image: String
+    title: String
+    tag: String
+    caption: String
+  }
+
+  input ExperienceInput {
+    title: String!
+    company: String!
+    dates: String
+    summary: String
+    bullets: [String!]
+    media: [MediaInput!]
+  }
+
+  input SkillInput {
+    id: String!
+    label: String!
+    content: String
+  }
+
   type User {
     id: ID!
     email: String!
@@ -40,6 +84,9 @@ export const typeDefs = gql`
     bio: String
     role: Role!
     isApproved: Boolean!
+    theme: Theme!
+    experience: [Experience!]
+    skills: [Skill!]
     galleries: [Gallery!]
     blogs: [BlogPost!]
     journalEntries: [JournalEntry!]
@@ -55,9 +102,10 @@ export const typeDefs = gql`
     id: ID!
     title: String!
     description: String
+    location: String
     artist: User!
     photos: [Photo!]!
-    theme: Theme!
+    theme: Theme
     isPublished: Boolean!
     photoCount: Int!
     likes: [User!]
@@ -136,13 +184,14 @@ export const typeDefs = gql`
     # is derived from that session.
 
     # User mutations
-    updateProfile(name: String, bio: String, profilePicture: String): User
+    updateProfile(name: String, bio: String, profilePicture: String, theme: Theme): User
+    updateResume(experience: [ExperienceInput!], skills: [SkillInput!]): User
     approveUser(userId: ID!): User
     changeUserRole(userId: ID!, role: Role!): User
 
     # Gallery mutations
-    createGallery(title: String!, description: String, photoCount: Int!): Gallery
-    updateGallery(id: ID!, title: String, description: String, theme: Theme): Gallery
+    createGallery(title: String!, description: String, location: String, photoCount: Int!, theme: Theme): Gallery
+    updateGallery(id: ID!, title: String, description: String, location: String, theme: Theme): Gallery
     publishGallery(id: ID!): Gallery
     addPhotoToGallery(galleryId: ID!, filename: String!, filepath: String!, caption: String): Gallery
     deleteGallery(id: ID!): Boolean
