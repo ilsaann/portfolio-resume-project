@@ -31,6 +31,11 @@ export default function ProjectMenu() {
     router.push('/projects/janesGuild');
   }
 
+  const handleRollingStonersClicked = () => {
+    handleClose();
+    window.open('https://rolling-stoners.vercel.app', '_blank', 'noopener,noreferrer');
+  }
+
 
   // if Signed In this changes to ProfileAvatar labeled profile
   //    when clicked modal pops up where you can edit first name , last name
@@ -81,6 +86,11 @@ export default function ProjectMenu() {
       onClick={handleJaneClicked}
     >
       <Avatar src="/janes-guild-logo-removebg.png" /> Jane's Guild
+    </MenuItem>
+    <MenuItem
+      onClick={handleRollingStonersClicked}
+    >
+      <Avatar>RS</Avatar> Rolling Stoners
     </MenuItem>
     </Menu>
   </>
