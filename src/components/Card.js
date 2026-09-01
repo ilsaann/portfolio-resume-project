@@ -9,9 +9,11 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
+import { useScrollGlow } from "../lib/useScrollGlow";
 
 export default function Card({ header, content, media, bullets = [],}) {
   const [expanded, setExpanded] = useState(false);
+  const { ref: glowRef, active: glowActive } = useScrollGlow();
   const image = media?.[0]?.image;
 
   const onCardClick = () => {
@@ -81,7 +83,8 @@ export default function Card({ header, content, media, bullets = [],}) {
 
   return (
     <MUICard
-       className="glowOnHoverGold"
+       ref={glowRef}
+       className={`glowOnHoverDeep${glowActive ? ' glowActive' : ''}`}
        sx={{ width: '345px !important', backgroundColor: cardBackgroundColor, fontFamily: 'var(--font-italiana), serif !important', fontWeight: 600,
     }}
        onClick={onCardClick}

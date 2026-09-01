@@ -36,6 +36,11 @@ yarn-error.log*
 # vercel
 .vercel
 
+# user-uploaded gallery images (local-disk storage - won't survive on
+# Vercel's ephemeral filesystem anyway; real object storage is a tracked
+# backlog item)
+/public/uploads/
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts

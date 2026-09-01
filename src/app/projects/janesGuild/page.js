@@ -28,15 +28,20 @@ export default async function page() {
         <div>glass of description of Jane and the Guild if no one signed in</div>
         {session?.user?.id ? (
           <div>
-            <Link href={`/projects/janesGuild/member/${session.user.id}`} className="glowOnHover">
-              {session.user.isApproved ? 'Go to my About Me page' : 'View my (pending approval) About Me page'}
+            <Link href={`/projects/janesGuild/member/${session.user.id}`} className="glowOnHoverDeep">
+              {session.user.isApproved ? 'Go to my About Me page & gallery' : 'View my (pending approval) About Me page'}
             </Link>
           </div>
         ) : (
           <div>
-            <Link href="/login" className="glowOnHover">Join as a connoisseur or join the guild</Link>
+            <Link href="/login" className="glowOnHoverDeep">Join as a connoisseur or join the guild</Link>
           </div>
         )}
+        <div>
+          <Link href="/projects/janesGuild/galleries" className="glowOnHoverDeep">
+            Browse all Guild galleries
+          </Link>
+        </div>
         <Divider orientation="horizontal" />
         <div>Maybe sooner rather than later a map</div>
       </div>

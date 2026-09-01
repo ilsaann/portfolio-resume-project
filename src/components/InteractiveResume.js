@@ -1,8 +1,11 @@
+'use client';
+
 import React from 'react';
 import styles from '../app/styles/Resume.module.css';
 import { Accordion, AccordionDetails, AccordionSummary, Box, Divider, Stack, Typography } from '@mui/material';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import Card from './Card';
+import { useScrollGlow } from '../lib/useScrollGlow';
 
 // Extracted from the original hardcoded resume/page.js so any member page
 // can render the same "Skills accordion + Experience cards" layout by
@@ -53,6 +56,42 @@ const accordionSx = {
   margin: 0,
 };
 
+// Its own component (rather than inline in the .map() below) because
+// useScrollGlow() is a hook - calling it once per array item inside a
+// callback would break the rules of hooks, but calling it once per
+// component instance here is fine.
+function SkillAccordion({ skill, isFirst, isLast }) {
+  const { ref: glowRef, active: glowActive } = useScrollGlow();
+
+  return (
+    <Accordion
+      ref={glowRef}
+      disableGutters
+      square
+      className={`glowOnHoverDeep${glowActive ? ' glowActive' : ''}`}
+      sx={{
+        ...accordionSx,
+        ...(isFirst && { borderTopLeftRadius: '10px', borderTopRightRadius: '10px' }),
+        ...(isLast && { borderBottomLeftRadius: '10px', borderBottomRightRadius: '10px' }),
+      }}
+    >
+      <AccordionSummary
+        expandIcon={<ArrowDropDownIcon />}
+        aria-controls={`${skill.id}-content`}
+        id={`${skill.id}-header`}
+        sx={centeredSummarySx}
+      >
+        <Typography>{skill.label}</Typography>
+      </AccordionSummary>
+      <AccordionDetails sx={acoordionDetailsSx}>
+        <Typography sx={accordionTypographySx}>
+          {skill.content}
+        </Typography>
+      </AccordionDetails>
+    </Accordion>
+  );
+}
+
 export default function InteractiveResume({ skills = [], experience = [] }) {
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', mb: 4, padding: 4, width: 'fit-content', maxWidth: '95%', backgroundColor: '#ffffff40', borderRadius: '10px' }}>
@@ -61,31 +100,12 @@ export default function InteractiveResume({ skills = [], experience = [] }) {
           <Typography variant="h4" sx={{ fontFamily: 'var(--font-italiana), serif !important', fontWeight: 600, color: 'var(--theme-text-on-surface)', WebkitTextStroke: '.5px rgba(168, 140, 200, 0.9)', paintOrder: 'stroke fill' }}>Skills</Typography>
 
           {skills.map((skill, index) => (
-            <Accordion
+            <SkillAccordion
               key={skill.id}
-              disableGutters
-              square
-              className="glowOnHoverGold"
-              sx={{
-                ...accordionSx,
-                ...(index === 0 && { borderTopLeftRadius: '10px', borderTopRightRadius: '10px' }),
-                ...(index === skills.length - 1 && { borderBottomLeftRadius: '10px', borderBottomRightRadius: '10px' }),
-              }}
-            >
-              <AccordionSummary
-                expandIcon={<ArrowDropDownIcon />}
-                aria-controls={`${skill.id}-content`}
-                id={`${skill.id}-header`}
-                sx={centeredSummarySx}
-              >
-                <Typography>{skill.label}</Typography>
-              </AccordionSummary>
-              <AccordionDetails sx={acoordionDetailsSx}>
-                <Typography sx={accordionTypographySx}>
-                  {skill.content}
-                </Typography>
-              </AccordionDetails>
-            </Accordion>
+              skill={skill}
+              isFirst={index === 0}
+              isLast={index === skills.length - 1}
+            />
           ))}
 
           <Divider />

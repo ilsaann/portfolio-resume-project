@@ -54,11 +54,13 @@ a {
 }
 
 /* Shared hover affordance for anything clickable/expandable (resume cards,
-   accordions, project links) — a soft lavender glow + slight lift so it's
-   obvious the element responds to a click, without changing its color.
-   .glowOnHoverGold below is the same treatment in a brassy/gold tone,
-   kept as a separate class (not a replacement) so both are available to
-   compare - lavender stays the default everywhere it's already used. */
+   accordions, project links) — a soft glow + slight lift so it's obvious
+   the element responds to a click, without changing its color. Multiple
+   color variants are kept side by side (not replacing each other) while
+   deciding which to use where: .glowOnHover is the original lavender,
+   .glowOnHoverGold a brassy gold test, .glowOnHoverDeep the deep teal-green
+   page background color (for a subtler, "sinking in" depth effect instead
+   of a bright accent). */
 .glowOnHover {
   transition: box-shadow 0.25s ease, transform 0.15s ease;
   cursor: pointer;
@@ -85,32 +87,71 @@ a {
   transform: translateY(-2px);
 }
 
+.glowOnHoverDeep {
+  transition: box-shadow 0.25s ease, transform 0.15s ease;
+  cursor: pointer;
+}
+
+.glowOnHoverDeep:hover,
+.glowOnHoverDeep:focus-visible {
+  box-shadow:
+    0 0 0 2px rgba(19, 63, 71, 0.65),
+    0 0 22px 6px rgba(19, 63, 71, 0.5);
+  transform: translateY(-2px);
+}
+
 /* MOBILE FIX: :hover never fires on touch devices, so on a phone there was
-   previously zero indication that a Card/Accordion is tappable/expandable -
-   give touch devices (and devices with no fine pointer at all) a lighter,
-   always-on version of the glow instead of only-on-hover. */
+   previously zero indication that a Card/Accordion is tappable/expandable.
+   Baseline: a faint, always-on hint (works even without JS/IntersectionObserver).
+   .glowActive (added by src/lib/useScrollGlow.js while the element is
+   scrolled into view) bumps it up to the full :hover-strength glow, so
+   sections light up as they enter the screen instead of sitting static. */
 @media (hover: none), (pointer: coarse) {
   .glowOnHover {
     box-shadow:
-      0 0 0 1px rgba(162, 142, 188, 0.45),
-      0 0 14px 3px rgba(162, 142, 188, 0.3);
+      0 0 0 1px rgba(162, 142, 188, 0.35),
+      0 0 10px 2px rgba(162, 142, 188, 0.2);
   }
   .glowOnHoverGold {
     box-shadow:
-      0 0 0 1px rgba(168, 126, 43, 0.45),
-      0 0 14px 3px rgba(168, 126, 43, 0.3);
+      0 0 0 1px rgba(168, 126, 43, 0.35),
+      0 0 10px 2px rgba(168, 126, 43, 0.2);
+  }
+  .glowOnHoverDeep {
+    box-shadow:
+      0 0 0 1px rgba(19, 63, 71, 0.4),
+      0 0 10px 2px rgba(19, 63, 71, 0.3);
+  }
+
+  .glowOnHover.glowActive {
+    box-shadow:
+      0 0 0 2px rgba(162, 142, 188, 0.55),
+      0 0 22px 6px rgba(162, 142, 188, 0.45);
+  }
+  .glowOnHoverGold.glowActive {
+    box-shadow:
+      0 0 0 2px rgba(168, 126, 43, 0.55),
+      0 0 22px 6px rgba(168, 126, 43, 0.45);
+  }
+  .glowOnHoverDeep.glowActive {
+    box-shadow:
+      0 0 0 2px rgba(19, 63, 71, 0.65),
+      0 0 22px 6px rgba(19, 63, 71, 0.5);
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .glowOnHover,
-  .glowOnHoverGold {
+  .glowOnHoverGold,
+  .glowOnHoverDeep {
     transition: box-shadow 0.25s ease;
   }
   .glowOnHover:hover,
   .glowOnHover:focus-visible,
   .glowOnHoverGold:hover,
-  .glowOnHoverGold:focus-visible {
+  .glowOnHoverGold:focus-visible,
+  .glowOnHoverDeep:hover,
+  .glowOnHoverDeep:focus-visible {
     transform: none;
   }
 }
