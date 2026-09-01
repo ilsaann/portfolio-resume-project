@@ -25,7 +25,6 @@
     display: flex;
     flex-direction: column;
     background-color: #133f47;
-    /* deep green */
     font-family: var(--font-italiana), serif;
     width: 100%;
 }

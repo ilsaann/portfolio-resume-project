@@ -5,11 +5,11 @@ import {
   Breadcrumbs, 
   Link, 
   Avatar,
-  Typography 
+  Typography,
 } from '@mui/material';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
-import Image from 'next/image';
 import styles from '../app/styles/Header.module.css';
+import ProjectMenu from './ProjectMenu';
 
 //TODO: lets have my name center here same style I think and make the paper larger 
 
@@ -55,13 +55,7 @@ export default function Header({ activeSection = 'about' }) {
           >
             Resume
           </Link>
-          <Link 
-            href="#"
-            className={styles.menuLink}
-            underline="none"
-          >
-            Projects
-          </Link>
+          <ProjectMenu />
         </Breadcrumbs>
       </Box>
     </Box>

@@ -1,0 +1,18 @@
+.body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: #133f47;
+    font-family: var(--font-italiana), serif;
+}
+
+.janeMain {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: #133f47;
+    font-family: var(--font-italiana), serif;
+}

@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from '../styles/Resume.module.css';
-import {Accordion, AccordionDetails, AccordionSummary, Box, Divider, Stack, Typography} from '@mui/material';
+import { Accordion, AccordionDetails, AccordionSummary, Box, Divider, Stack, Typography} from '@mui/material';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import Card from '../../components/Card';
 import Header from '../../components/Header';

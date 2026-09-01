@@ -90,11 +90,10 @@
   color: rgba(230, 210, 247, 0.85) !important;  /* text unchanged */
 }
 
-/* active: text stays same color, solid gold underline */
 .menuLink.active {
   color: rgba(230, 210, 247, 0.85) !important;  /* text unchanged */
   text-decoration: underline !important;
-  text-decoration-color:rgba(162, 142, 188, 0.95) !important;     /* solid gold underline */
+  text-decoration-color:rgba(162, 142, 188, 0.95) !important;   
   text-underline-offset: 4px !important;
   text-decoration-thickness: 2px !important;
 }

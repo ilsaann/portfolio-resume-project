@@ -1,0 +1,60 @@
+.page {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: #133f47;
+    width: 100%;
+    font-family: var(--font-italiana), serif;
+    color: rgba(230, 210, 247, 0.85) !important;
+    padding: 110px 32px 32px;
+}
+
+.h1 {
+    font-family: var(--font-italiana), serif;
+    font-weight: 500;
+    color: rgba(230, 210, 247, 0.85) !important;
+}
+
+.p {
+    font-family: var(--font-italiana), serif;
+    color: rgba(230, 210, 247, 0.85) !important;
+}
+
+.intro {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 32px 32px;
+}
+
+.signIn {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    padding: 32px 32px;
+    background: #ffffff40;
+}
+
+.signInButton {
+    font-family: var(--font-italiana), serif;
+    font-weight: 500;
+    font-size: larger; 
+    height: 40;
+    padding: 4px 12px;
+    border-radius: 5px;
+}
+
+.signUp {
+    display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        border-radius: 10px;
+        padding: 32px 32px;
+        background: #96b1b8f2;
+        width: 30%;
+}
