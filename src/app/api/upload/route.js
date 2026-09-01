@@ -1,17 +1,25 @@
-import { writeFile, mkdir } from 'fs/promises';
-import { join } from 'path';
-import { existsSync } from 'fs';
+import { v2 as cloudinary } from 'cloudinary';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '../auth/[...nextauth]/route.js';
 import { connectDB } from '../../../lib/db.js';
 import { Gallery } from '../../../models/Gallery.js';
 
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
+
+// Migrated from writing to public/uploads (local disk) to Cloudinary -
+// local disk doesn't survive Vercel's ephemeral filesystem in production,
+// so uploaded gallery photos would have silently disappeared after the
+// serving instance recycled.
 export async function POST(req) {
   try {
     // SECURITY: this route used to accept any POST with a file + galleryId,
-    // no auth at all - anyone could write into any gallery's upload folder.
-    // Require a signed-in session and verify they actually own the gallery
-    // (or are an admin) before writing anything to disk.
+    // no auth at all - anyone could upload into any gallery. Require a
+    // signed-in session and verify they actually own the gallery (or are
+    // an admin) before uploading anything.
     const session = await getServerSession(authOptions);
     if (!session?.user?.id) {
       return new Response(
@@ -46,27 +54,27 @@ export async function POST(req) {
       );
     }
 
-    // Create uploads directory if it doesn't exist
-    const uploadsDir = join(process.cwd(), 'public', 'uploads', galleryId);
-    if (!existsSync(uploadsDir)) {
-      await mkdir(uploadsDir, { recursive: true });
-    }
-
-    // Generate unique filename
-    const timestamp = Date.now();
-    const filename = `${timestamp}-${file.name}`;
-    const filepath = join(uploadsDir, filename);
-
-    // Convert file to buffer and save
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
-    await writeFile(filepath, buffer);
+
+    const uploadResult = await new Promise((resolve, reject) => {
+      const uploadStream = cloudinary.uploader.upload_stream(
+        { folder: `janes-guild/${galleryId}` },
+        (error, result) => {
+          if (error) reject(error);
+          else resolve(result);
+        }
+      );
+      uploadStream.end(buffer);
+    });
 
     return new Response(
       JSON.stringify({
         success: true,
-        filename,
-        filepath: `/uploads/${galleryId}/${filename}`,
+        // public_id is what a future delete-photo feature would need to
+        // remove the image from Cloudinary too, not just from Mongo.
+        filename: uploadResult.public_id,
+        filepath: uploadResult.secure_url,
       }),
       { status: 200, headers: { 'Content-Type': 'application/json' } }
     );

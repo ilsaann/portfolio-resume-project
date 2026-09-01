@@ -244,6 +244,22 @@ export const resolvers = {
       }
 
       gallery.photos.push({ filename, filepath, caption });
+      gallery.photoCount = gallery.photos.length;
+      await gallery.save();
+      return gallery.populate('artist');
+    },
+
+    removePhotoFromGallery: async (_, { galleryId, photoId }, context) => {
+      await connectDB();
+      const user = await getAuthenticatedUser(context);
+      const gallery = await Gallery.findById(galleryId);
+
+      if (gallery.artist.toString() !== user._id.toString() && user.role !== 'admin') {
+        throw new Error('Not authorized');
+      }
+
+      gallery.photos = gallery.photos.filter((p) => p._id.toString() !== photoId);
+      gallery.photoCount = gallery.photos.length;
       await gallery.save();
       return gallery.populate('artist');
     },

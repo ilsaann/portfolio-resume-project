@@ -51,8 +51,16 @@ export default function Gallery({
   editable = false,
   onDeleteImage,
   onReplaceImage,
+  onAddPhoto,
 }) {
   const [editing, setEditing] = useState(false);
+  const fileInputId = `add-photo-${React.useId()}`;
+
+  const handleAddPhotoChange = (event) => {
+    const file = event.target.files?.[0];
+    if (file) onAddPhoto?.(file);
+    event.target.value = '';
+  };
 
   const themeClass = useMemo(() => {
     if (themeOption === 'turtle') return styles.themeTurtle;
@@ -65,9 +73,25 @@ export default function Gallery({
       <div className={styles.headerRow}>
         <h2 className={styles.title}>{galleryTitle}</h2>
         {editable && (
-          <button className={styles.editToggle} onClick={() => setEditing(v => !v)}>
-            {editing ? 'Done' : 'Edit'}
-          </button>
+          <div className={styles.headerActions}>
+            {editing && onAddPhoto && (
+              <>
+                <input
+                  id={fileInputId}
+                  type="file"
+                  accept="image/*"
+                  onChange={handleAddPhotoChange}
+                  hidden
+                />
+                <label htmlFor={fileInputId} className={styles.editToggle}>
+                  + Add Photo
+                </label>
+              </>
+            )}
+            <button className={styles.editToggle} onClick={() => setEditing(v => !v)}>
+              {editing ? 'Done' : 'Edit'}
+            </button>
+          </div>
         )}
       </div>
 

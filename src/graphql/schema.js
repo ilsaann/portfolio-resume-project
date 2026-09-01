@@ -194,6 +194,7 @@ export const typeDefs = gql`
     updateGallery(id: ID!, title: String, description: String, location: String, theme: Theme): Gallery
     publishGallery(id: ID!): Gallery
     addPhotoToGallery(galleryId: ID!, filename: String!, filepath: String!, caption: String): Gallery
+    removePhotoFromGallery(galleryId: ID!, photoId: ID!): Gallery
     deleteGallery(id: ID!): Boolean
 
     # Blog mutations

@@ -45,7 +45,7 @@ export default async function MemberPage({ params }) {
     description: g.description,
     location: g.location,
     theme: g.theme,
-    photos: (g.photos || []).map((p) => ({ filepath: p.filepath, caption: p.caption })),
+    photos: (g.photos || []).map((p) => ({ id: p._id.toString(), filepath: p.filepath, caption: p.caption })),
   }));
 
   return (

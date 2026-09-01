@@ -16,6 +16,12 @@
   font-family: var(--font-italiana), serif;
 }
 
+.headerActions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
 .editToggle {
   font-family: var(--font-italiana), serif;
   cursor: pointer;
